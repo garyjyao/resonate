@@ -1146,18 +1146,27 @@ func TestRunHelpIsConciseAndPointsToSchema(t *testing.T) {
 		}
 	})
 
-	for _, want := range []string{"Run a load test scenario from a scenario config YAML file.", "Usage:", "Flags:"} {
+	for _, want := range []string{"Run a load test scenario from a scenario config YAML file.", "Usage:", "Examples:", "Flags:"} {
 		if !strings.Contains(output, want) {
 			t.Errorf("run help missing %q", want)
 		}
 	}
-	for _, want := range []string{
-		"Scenario:\n  Run 'resonate schema' to print the complete JSON Schema for scenario config YAML. See docs/scenarios.md for examples and field behavior.",
-		"Example:",
-	} {
-		if !strings.Contains(output, want) {
-			t.Errorf("run help missing %q", want)
-		}
+	usageIndex := strings.Index(output, "Usage:")
+	examplesIndex := strings.Index(output, "Examples:")
+	if usageIndex < 0 || examplesIndex < 0 || usageIndex >= examplesIndex {
+		t.Errorf("expected Usage before Examples, got:\n%s", output)
+	}
+	if strings.Contains(output, "Scenario:") || strings.Contains(output, "\nExample:") {
+		t.Errorf("help should not repeat the Examples heading, got:\n%s", output)
+	}
+	if !strings.Contains(output, "# Full schema: 'resonate schema'.") {
+		t.Errorf("run help missing schema guidance, got:\n%s", output)
+	}
+	if !strings.Contains(output, "protocol: http") {
+		t.Errorf("run help missing scenario example, got:\n%s", output)
+	}
+	if !strings.Contains(output, "  protocol: http\n  load:\n    duration: 30s\n    rate: 50\n    workers: 10\n  http:\n") {
+		t.Errorf("scenario example is not a complete top-level YAML mapping, got:\n%s", output)
 	}
 }
 
