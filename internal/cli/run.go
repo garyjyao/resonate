@@ -21,6 +21,23 @@ func newRunCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "run <scenario.yaml>",
 		Short: "Run a load test scenario from a config file",
+		Long: `Run a load test scenario from a scenario config YAML file.
+
+Scenario:
+  Run 'resonate schema' to print the complete JSON Schema for scenario config YAML. See docs/scenarios.md for examples and field behavior.
+
+Example:
+  protocol: http
+  load:
+    duration: 30s
+    rate: 50
+    workers: 10
+  http:
+    timeout: 5s
+    base_url: http://localhost:8080
+    targets:
+      - method: GET
+        url: /health`,
 		Args: func(cmd *cobra.Command, args []string) error {
 			if len(args) != 1 {
 				return fmt.Errorf("expected one scenario file, got %d; try '%s --help' or '%s run scenario.yaml'", len(args), cmd.CommandPath(), cmd.Root().CommandPath())

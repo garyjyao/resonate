@@ -2,6 +2,26 @@
 
 Run a load test scenario from a config file
 
+### Synopsis
+
+Run a load test scenario from a scenario config YAML file.
+
+Scenario:
+  Run 'resonate schema' to print the complete JSON Schema for scenario config YAML. See docs/scenarios.md for examples and field behavior.
+
+Example:
+  protocol: http
+  load:
+    duration: 30s
+    rate: 50
+    workers: 10
+  http:
+    timeout: 5s
+    base_url: http://localhost:8080
+    targets:
+      - method: GET
+        url: /health
+
 ```
 resonate run <scenario.yaml> [flags]
 ```
