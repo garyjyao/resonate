@@ -13,7 +13,7 @@ resonate run <scenario.yaml> [flags]
 ### Examples
 
 ```
-  # Full schema: 'resonate schema'. More examples: docs/scenarios.md.
+  # Full schema: run 'resonate schema'. More examples: docs/scenarios.md.
   protocol: http
   load:
     duration: 30s
