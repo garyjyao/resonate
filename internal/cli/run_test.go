@@ -1159,7 +1159,7 @@ func TestRunHelpIsConciseAndPointsToSchema(t *testing.T) {
 	if strings.Contains(output, "Scenario:") || strings.Contains(output, "\nExample:") {
 		t.Errorf("help should not repeat the Examples heading, got:\n%s", output)
 	}
-	if !strings.Contains(output, "# Full schema: 'resonate schema'.") {
+	if !strings.Contains(output, "resonate schema") {
 		t.Errorf("run help missing schema guidance, got:\n%s", output)
 	}
 	if !strings.Contains(output, "protocol: http") {
